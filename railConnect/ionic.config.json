@@ -1,0 +1,7 @@
+{
+  "name": "railConnect",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
