@@ -4,7 +4,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { FavorisPage } from './favoris.page';
 
-describe('favorisPage', () => {
+describe('FavorisPage', () => {
   let component: FavorisPage;
   let fixture: ComponentFixture<FavorisPage>;
 

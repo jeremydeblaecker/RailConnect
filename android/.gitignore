@@ -86,7 +86,7 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-# Android profiling
+# Android Profiling
 *.hprof
 
 # Cordova plugins for Capacitor
