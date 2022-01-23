@@ -27,11 +27,24 @@
 
 // color
 ion-toolbar {
-    background: linear-gradient( 
-        50deg, 
+    background: linear-gradient(
+        50deg,
         #a11b6f 38%,
         #c4144a 62%,
         #da101b 82%
         );
 }
 
+ion-title{
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+ion-title {
+
+}

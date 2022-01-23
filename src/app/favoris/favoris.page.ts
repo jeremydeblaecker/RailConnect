@@ -9,4 +9,14 @@ export class FavorisPage {
 
   constructor() {}
 
+  favoris(){
+    const ionStar = (<HTMLIonIconElement>document.getElementById('ionStarfav'));
+    if (ionStar.name === 'star-outline' ){
+      ionStar.name = 'star';
+    }
+    else{
+      ionStar.name = 'star-outline';
+    }
+  }
+
 }
