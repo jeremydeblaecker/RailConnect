@@ -1,9 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button icon="chevron-back-outline"></ion-back-button>
+      <ion-button (click)="backButton()" color="light">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>detail-gare</ion-title>
+    <ion-title class="text-header-center" color="light">
+      detail-gare
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 

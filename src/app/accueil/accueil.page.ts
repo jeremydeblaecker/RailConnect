@@ -19,6 +19,8 @@ export class AccueilPage implements OnInit{
   ) { }
 
   ngOnInit() {
+    this.storage.set('actualNav','tabs/accueil');
+
     this.readAPI('https://api.sncf.com/v1/coverage/sncf/stop_points/stop_point:SNCF:87753764:Train/places_nearby?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
       .subscribe((data) => {
       console.log('data: ', data);
@@ -28,7 +30,7 @@ export class AccueilPage implements OnInit{
 
       this.storage.set('DataApi',data);
       this.storage.get('DataApi').then((val) => {
-      console.log('DataApi', val);
+        console.log('DataApi', val);
       });
     });
 
@@ -49,7 +51,7 @@ export class AccueilPage implements OnInit{
   }
 
   goToGare(){
-    this.navCtrl.navigateForward('detail-gare');
+    this.navCtrl.navigateForward('tabs/detail-gare');
   }
 
 }

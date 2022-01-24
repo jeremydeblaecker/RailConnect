@@ -12,6 +12,10 @@ const routes: Routes = [
         loadChildren: () => import('../accueil/accueil.module').then(m => m.AccueilPageModule)
       },
       {
+        path: 'detail-gare',
+        loadChildren: () => import('../detail-gare/detail-gare.module').then( m => m.DetailGarePageModule)
+      },
+      {
         path: 'favoris',
         loadChildren: () => import('../favoris/favoris.module').then(m => m.FavorisPageModule)
       },

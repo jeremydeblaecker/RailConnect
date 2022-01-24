@@ -5,9 +5,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  },  {
+  },
+  {
     path: 'detail-gare',
     loadChildren: () => import('./detail-gare/detail-gare.module').then( m => m.DetailGarePageModule)
+  },
+  {
+    path: 'creation-profil',
+    loadChildren: () => import('./creation-profil/creation-profil.module').then( m => m.CreationProfilPageModule)
   }
 
 ];
