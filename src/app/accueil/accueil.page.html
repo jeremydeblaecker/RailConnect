@@ -18,12 +18,12 @@
   <ion-card >
     <ion-item>
       <div style="width: 100%;" button (click)="goToGare()">
-        <ion-card-title >Nom gare</ion-card-title>
+        <ion-card-title >{{ stationData.nom }}</ion-card-title>
       </div>
       <ion-icon class="starIcon" style="cursor: pointer;" id="ionStar" button (click)="favoris()" name="star-outline" slot="end"></ion-icon>
     </ion-item >
     <ion-item button (click)="goToGare()">
-      <ion-card-subtitle>Distance (mètres) : </ion-card-subtitle>
+      <ion-card-subtitle>Distance (mètres) : {{ stationData.distance }} </ion-card-subtitle>
     </ion-item>
   </ion-card>
 </ion-content>
