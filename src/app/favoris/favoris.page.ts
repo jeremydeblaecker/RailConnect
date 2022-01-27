@@ -1,16 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {NavController} from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'app-favoris',
   templateUrl: 'favoris.page.html',
   styleUrls: ['favoris.page.scss']
 })
-export class FavorisPage {
+export class FavorisPage implements OnInit {
 
-  constructor() {}
+  connecter: any = false;
+  oldNav: any;
 
-  favoris(){
-    const ionStar = (<HTMLIonIconElement>document.getElementById('ionStarfav'));
+  constructor(
+    public navCtrl: NavController,
+    private storage: Storage,
+
+  ) {}
+
+  ngOnInit()
+  {
+    this.storage.get('actualNav').then((actualNav) => {
+      if(actualNav){
+        this.oldNav = actualNav;
+      }
+      this.storage.set('actualNav','tabs/favoris');
+    });
+
+  }
+
+  favoris()
+  {
+    const ionStar = (document.getElementById('ionStarfav') as HTMLIonIconElement);
     if (ionStar.name === 'star-outline' ){
       ionStar.name = 'star';
     }
@@ -18,5 +40,12 @@ export class FavorisPage {
       ionStar.name = 'star-outline';
     }
   }
+
+  goToCreationProfil()
+  {
+    this.navCtrl.navigateForward('creation-profil');
+  }
+
+
 
 }
