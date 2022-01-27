@@ -1,24 +1,66 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="color">
-    <ion-title class="ion-text-center" color="light">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="modif"  (click)="this.modif = false;" color="light">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="text-header-center" color="light">
       Profil
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Profil</ion-title>
     </ion-toolbar>
   </ion-header>
-  <div class="aligner">
-    <ion-text id="destinations">
+
+  <div *ngIf="modif === false" class="aligner">
+    <ion-text>
     <h1>Informations</h1>
-    <h2>Votre pseudo: <p>...</p></h2>
-    <h2>Votre mail: <p>...</p></h2>
+    <h2>Votre pseudo: <p>{{ pseudo }}</p></h2>
+    <h2>Votre mail: <p>{{ mail }}</p></h2>
   </ion-text>
-  <ion-button >Modifier informations</ion-button>
+  <ion-button (click)="modif = true;" >Modifier informations</ion-button>
+  </div>
+
+  <div *ngIf="modif" class="aligner">
+    <ion-text>
+      <h1>Informations</h1>
+
+      <h3 class="aligner">Votre pseudo:
+
+        <ion-item class="aligner">
+          <ion-input id="input_Pseudo" type="username" value="{{ pseudo }}"></ion-input>
+        </ion-item>
+      </h3>
+      <h3 class="aligner">Votre mail:
+
+        <ion-item class="aligner">
+          <ion-input id="input_Mail" type="email" value="{{ mail }}"></ion-input>
+        </ion-item>
+      </h3>
+      <h3 class="aligner">Ancien mot de passe:
+
+        <ion-item class="aligner">
+          <ion-input id="input_OldPassword" type="password" value=""></ion-input>
+          <ion-icon  id="icon_OldPassword" name="eye-outline" button (click)="visibilityPassword($event.target.id)" style="cursor: pointer;"></ion-icon>
+        </ion-item>
+      </h3>
+      <h3 class="aligner">Nouveau mot de passe:
+
+        <ion-item class="aligner">
+          <ion-input id="input_NewPassword" type="password" value=""></ion-input>
+          <ion-icon id="icon_NewPassword" name="eye-outline" button (click)="visibilityPassword($event.target.id)" style="cursor: pointer;" ></ion-icon>
+        </ion-item>
+      </h3>
+    </ion-text>
+
+    <ion-button (click)="modifierInfos()" >Valider</ion-button>
   </div>
 
   <!-- <app-explore-container name="Profil page"></app-explore-container> -->
