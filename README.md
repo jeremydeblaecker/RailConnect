@@ -1,8 +1,8 @@
 # Rail Connect
 
 ## Contributeur
-  MULLER Jimmy
-  MERCADAL Julien
+  MULLER Jimmy  
+  MERCADAL Julien  
   DEBLAECKER Jérémy
   
 ## Lancement Application
