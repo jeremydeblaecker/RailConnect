@@ -35,7 +35,7 @@ export class AccueilPage implements OnInit{
       console.log(data);
       this.data = data;
 
-      this.stationData.nom = this.data.places_nearby[2].name;
+      this.stationData.nom = this.data.places_nearby[2].stop_point.name;
       this.stationData.distance = this.data.places_nearby[2].distance;
       this.stationData.id = this.data.places_nearby[2].id;
 
