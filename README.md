@@ -1,5 +1,10 @@
 # Rail Connect
 
+## Contributeur
+  MULLER Jimmy
+  MERCADAL Julien
+  DEBLAECKER Jérémy
+  
 ## Lancement Application
  Pour lancer l'application il suffit d'effectuer la commande: ``ionic capacitor run android``
  
