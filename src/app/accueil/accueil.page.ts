@@ -22,6 +22,7 @@ export class AccueilPage implements OnInit{
     private http: HttpClient,
     private storage: Storage,
     public navCtrl: NavController,
+    
   ) {
      this.storage.set('actualNav','tabs/accueil');
     }
@@ -69,7 +70,8 @@ export class AccueilPage implements OnInit{
     }
 
     goToGare(){
-      this.navCtrl.navigateForward('tabs/detail-gare');
+      this.storage.set('titreGare', { 'titre' :this.stationData.nom, 'id' :this.stationData.id});
+      this.navCtrl.navigateRoot('tabs/detail-gare');
     }
 
   }

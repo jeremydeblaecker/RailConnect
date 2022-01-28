@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import {NavController} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -12,7 +12,7 @@ export class DetailGarePage implements OnInit {
   actualNav;
   destinations: any[] = [];
   data: any;
-
+  title: any;
   schedule = {
     heure: '',
     destination:''
@@ -23,13 +23,19 @@ export class DetailGarePage implements OnInit {
     public navCtrl: NavController,
     private storage: Storage,
     private http: HttpClient,
-  ) { }
+  ) {
+    this.storage.get('titreGare').then((titreGare) => {
+      console.log('titreGare: ', titreGare);
+      this.title = titreGare.titre;
+    });
+   }
 
   ngOnInit() {
     this.storage.get('actualNav').then((nav) => {
       console.log('actualNav: ', nav);
       this.actualNav= nav;
     });
+    
 
     this.readAPI('https://api.sncf.com/v1/coverage/sncf/stop_points/stop_point:SNCF:87751404:Train/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
     .subscribe((data) => {
@@ -107,6 +113,6 @@ export class DetailGarePage implements OnInit {
   }
 
   backButton(){
-    this.navCtrl.navigateForward(this.actualNav);
+    this.navCtrl.navigateRoot(this.actualNav);
   }
 }

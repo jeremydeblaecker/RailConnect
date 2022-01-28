@@ -56,6 +56,6 @@ export class CreationProfilPage implements OnInit {
 
   backButton(){
     console.log('this.oldNav: ', this.oldNav);
-    this.navCtrl.navigateForward(this.oldNav);
+    this.navCtrl.navigateRoot(this.oldNav);
   }
 }

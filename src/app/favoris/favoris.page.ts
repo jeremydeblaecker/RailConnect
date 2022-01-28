@@ -46,7 +46,7 @@ export class FavorisPage implements OnInit {
 
   goToCreationProfil()
   {
-    this.navCtrl.navigateForward('creation-profil');
+    this.navCtrl.navigateRoot('creation-profil');
   }
 
 
