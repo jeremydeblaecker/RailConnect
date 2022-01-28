@@ -1,5 +1,4 @@
 import { CapacitorConfig } from '@capacitor/cli';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 const config: CapacitorConfig = {
   appId: 'com.DevMobile.RailConnect',
@@ -9,7 +8,7 @@ const config: CapacitorConfig = {
 
   plugins: {
     SplashScreen: {
-      launchShowDuration: 3000,
+      launchShowDuration: 3500,
       launchAutoHide: true,
       backgroundColor: '#ffffffff',
       androidSplashResourceName: 'splash',
