@@ -17,16 +17,19 @@ export class FavorisPage implements OnInit {
     public navCtrl: NavController,
     private storage: Storage,
 
-  ) {}
-
-  ngOnInit()
-  {
+  ) {
     this.storage.get('actualNav').then((actualNav) => {
       if(actualNav){
         this.oldNav = actualNav;
       }
+      console.log('actualNav', actualNav);
       this.storage.set('actualNav','tabs/favoris');
     });
+  }
+
+  ngOnInit()
+  {
+    console.log('this.oldNav', this.oldNav);
 
   }
 

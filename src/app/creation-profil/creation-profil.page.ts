@@ -20,16 +20,17 @@ export class CreationProfilPage implements OnInit {
     public navCtrl: NavController,
     private storage: Storage,
 
-  ) { }
-
-  ngOnInit() {
-
+  ) {
     this.storage.get('actualNav').then((actualNav) => {
       if(actualNav){
         this.oldNav = actualNav;
       }
-      this.storage.set('actualNav','creation-profil');
     });
+  }
+
+  ngOnInit() {
+
+    console.log('this.oldNav: ', this.oldNav);
 
   }
 
@@ -54,6 +55,7 @@ export class CreationProfilPage implements OnInit {
   }
 
   backButton(){
+    console.log('this.oldNav: ', this.oldNav);
     this.navCtrl.navigateForward(this.oldNav);
   }
 }
