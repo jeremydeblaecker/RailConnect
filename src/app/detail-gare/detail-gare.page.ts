@@ -13,6 +13,8 @@ export class DetailGarePage implements OnInit {
   destinations: any[] = [];
   data: any;
   title: any;
+  id: any;
+  url: any
   schedule = {
     heure: '',
     destination:''
@@ -24,10 +26,7 @@ export class DetailGarePage implements OnInit {
     private storage: Storage,
     private http: HttpClient,
   ) {
-    this.storage.get('titreGare').then((titreGare) => {
-      console.log('titreGare: ', titreGare);
-      this.title = titreGare.titre;
-    });
+    
    }
 
   ngOnInit() {
@@ -35,9 +34,15 @@ export class DetailGarePage implements OnInit {
       console.log('actualNav: ', nav);
       this.actualNav= nav;
     });
-    
+    this.storage.get('titreGare').then((titreGare) => {
+      console.log('titreGare: ', titreGare);
+      this.title = titreGare.titre;
+      this.id = titreGare.id
 
-    this.readAPI('https://api.sncf.com/v1/coverage/sncf/stop_points/stop_point:SNCF:87751404:Train/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
+      this.url = 'https://api.sncf.com/v1/coverage/sncf/stop_points/'+this.id+'/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6'
+    console.log(this.url)
+
+    this.readAPI(this.url)
     .subscribe((data) => {
       this.data = data;
       this.data.stop_schedules.forEach(stop => {
@@ -45,36 +50,38 @@ export class DetailGarePage implements OnInit {
         stop.date_times.forEach(time => {
           this.schedule.heure = time.base_date_time;
           if(time.links.length===1){
-            this.schedule.destination = 'Marseille Saint-Charles';
+            this.schedule.destination = stop.display_informations.direction;
           }else{
-            switch (time.links[0].id) {
-              case 'destination:8706567661659224554':
-                this.schedule.destination = 'Briançon';
-                break;
-              case 'destination:5547075821219132384':
-                this.schedule.destination = 'Pertuis';
-                break;
-              case 'destination:3437088451011971465':
-                this.schedule.destination = 'Sisteron';
-                break;
-              case 'destination:2358122872950142815':
-                this.schedule.destination = 'Gap';
-                break;
-
-              default:
-                break;
-            }
+            this.schedule.destination = time.links[0].id;
 
           }
           this.schedules.push({heure:this.schedule.heure,destination:this.schedule.destination});
+          
         });
       });
+      this.schedules.forEach(schedules => {
+        if(schedules.destination === 'default'){
+        }
+        else{
+        this.data.notes.forEach(notes => {
+          if(notes.category ==='terminus'){
+            if(notes.id===schedules.destination){
+              schedules.destination=notes.value;
+            }
+          }
+        })
+      }
+      });
+
       console.log(this.schedules);
       for (var i = 0; i < Object.keys(this.schedules).length; i++){
         this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
       }
       console.log("this.destinations: ", this.destinations);
 
+    });
+  
+      
       
     });
   }
