@@ -25,9 +25,7 @@ export class DetailGarePage implements OnInit {
     public navCtrl: NavController,
     private storage: Storage,
     private http: HttpClient,
-  ) {
-    
-   }
+  ) {}
 
   ngOnInit() {
     this.storage.get('actualNav').then((nav) => {
@@ -78,6 +76,18 @@ export class DetailGarePage implements OnInit {
         this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
       }
       console.log("this.destinations: ", this.destinations);
+      if(this.destinations.length != 0)
+      {
+        var divListCard = document.getElementById("listCard");
+        for (let i = 0; i < this.destinations.length; i++) {
+          // var newcardGare = document.createElement("div")
+          const newcardGare = this.cardGare
+            .replace("__heure__", this.destinations[i].heure)
+            .replace("__destination__", this.destinations[i].destination)
+            .replace("__date__", this.destinations[i].date);
+            divListCard.appendChild(this.htmlToElement(newcardGare));
+        }
+      }
 
     });
   
@@ -122,4 +132,29 @@ export class DetailGarePage implements OnInit {
   backButton(){
     this.navCtrl.navigateRoot(this.actualNav);
   }
+
+  htmlToElement = (html) => {
+    const template = document.createElement("template");
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+  };
+
+  cardGare = `
+        <ion-card>
+          <ion-item>
+            <ion-card-title>
+              __heure__
+            </ion-card-title>
+            <ion-card-content style="margin-left: 18%;font-size: 23px;">
+              __destination__
+            </ion-card-content>
+          </ion-item>
+          <ion-item>
+            <ion-card-subtitle>
+              __date__
+            </ion-card-subtitle>
+          </ion-item>
+        </ion-card> `;
+
 }
