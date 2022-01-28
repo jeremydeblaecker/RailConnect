@@ -38,61 +38,58 @@ export class DetailGarePage implements OnInit {
       this.id = titreGare.id
 
       this.url = 'https://api.sncf.com/v1/coverage/sncf/stop_points/'+this.id+'/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6'
-    console.log(this.url)
+      console.log(this.url)
 
-    this.readAPI(this.url)
-    .subscribe((data) => {
-      this.data = data;
-      this.data.stop_schedules.forEach(stop => {
+      this.readAPI(this.url)
+      .subscribe((data) => {
+        this.data = data;
+        this.data.stop_schedules.forEach(stop => {
 
-        stop.date_times.forEach(time => {
-          this.schedule.heure = time.base_date_time;
-          if(time.links.length===1){
-            this.schedule.destination = stop.display_informations.direction;
-          }else{
-            this.schedule.destination = time.links[0].id;
+          stop.date_times.forEach(time => {
+            this.schedule.heure = time.base_date_time;
+            if(time.links.length===1){
+              this.schedule.destination = stop.display_informations.direction;
+            }else{
+              this.schedule.destination = time.links[0].id;
 
-          }
-          this.schedules.push({heure:this.schedule.heure,destination:this.schedule.destination});
-          
-        });
-      });
-      this.schedules.forEach(schedules => {
-        if(schedules.destination === 'default'){
-        }
-        else{
-        this.data.notes.forEach(notes => {
-          if(notes.category ==='terminus'){
-            if(notes.id===schedules.destination){
-              schedules.destination=notes.value;
             }
+            this.schedules.push({heure:this.schedule.heure,destination:this.schedule.destination});
+            
+          });
+        });
+        this.schedules.forEach(schedules => {
+          if(schedules.destination === 'default'){
           }
-        })
-      }
-      });
-
-      console.log(this.schedules);
-      for (var i = 0; i < Object.keys(this.schedules).length; i++){
-        this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
-      }
-      console.log("this.destinations: ", this.destinations);
-      if(this.destinations.length != 0)
-      {
-        var divListCard = document.getElementById("listCard");
-        for (let i = 0; i < this.destinations.length; i++) {
-          // var newcardGare = document.createElement("div")
-          const newcardGare = this.cardGare
-            .replace("__heure__", this.destinations[i].heure)
-            .replace("__destination__", this.destinations[i].destination)
-            .replace("__date__", this.destinations[i].date);
-            divListCard.appendChild(this.htmlToElement(newcardGare));
+          else{
+          this.data.notes.forEach(notes => {
+            if(notes.category ==='terminus'){
+              if(notes.id===schedules.destination){
+                schedules.destination=notes.value;
+              }
+            }
+          })
         }
-      }
+        });
 
-    });
-  
-      
-      
+        console.log(this.schedules);
+        for (var i = 0; i < Object.keys(this.schedules).length; i++){
+          this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
+        }
+        console.log("this.destinations: ", this.destinations);
+        if(this.destinations.length != 0)
+        {
+          var divListCard = document.getElementById("listCard");
+          for (let i = 0; i < this.destinations.length; i++) {
+            // var newcardGare = document.createElement("div")
+            const newcardGare = this.cardGare
+              .replace("__heure__", this.destinations[i].heure)
+              .replace("__destination__", this.destinations[i].destination)
+              .replace("__date__", this.destinations[i].date);
+              divListCard.appendChild(this.htmlToElement(newcardGare));
+          }
+        }
+
+      });
     });
   }
 
@@ -146,7 +143,7 @@ export class DetailGarePage implements OnInit {
             <ion-card-title>
               __heure__
             </ion-card-title>
-            <ion-card-content style="margin-left: 18%;font-size: 23px;">
+            <ion-card-content style="margin-left: 18%;font-size: 20px;">
               __destination__
             </ion-card-content>
           </ion-item>

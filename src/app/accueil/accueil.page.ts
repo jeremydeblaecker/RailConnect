@@ -63,9 +63,12 @@ export class AccueilPage implements OnInit{
       const ionStar = (<HTMLIonIconElement>document.getElementById('ionStar'));
       if (ionStar.name === 'star-outline' ){
         ionStar.name = 'star';
+        ionStar.classList.add('gold');
       }
       else{
         ionStar.name = 'star-outline';
+        ionStar.classList.remove('gold');
+        
       }
     }
 
