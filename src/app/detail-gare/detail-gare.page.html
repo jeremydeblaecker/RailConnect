@@ -12,11 +12,27 @@
 </ion-header>
 
 <ion-content>
+
   <ion-text id="destinations" class="aligner">
     <h1>Destinations</h1>
   </ion-text>
-  <div id="listCard"></div>
-  
+
+    <ion-card *ngFor="let dest of destinations">
+      <ion-item>
+        <ion-card-title>
+          {{ dest.heure }}
+        </ion-card-title>
+        <ion-card-content style="margin-left: 18%;font-size: 20px;">
+          {{ dest.destination }}
+        </ion-card-content>
+      </ion-item>
+      <ion-item>
+        <ion-card-subtitle>
+          {{ dest.date }}
+        </ion-card-subtitle>
+      </ion-item>
+    </ion-card>
+
 
   <!-- <ion-card>
     <ion-item>

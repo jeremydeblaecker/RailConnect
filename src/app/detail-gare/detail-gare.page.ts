@@ -14,7 +14,7 @@ export class DetailGarePage implements OnInit {
   data: any;
   title: any;
   id: any;
-  url: any
+  url: any;
   schedule = {
     heure: '',
     destination:''
@@ -35,10 +35,10 @@ export class DetailGarePage implements OnInit {
     this.storage.get('titreGare').then((titreGare) => {
       console.log('titreGare: ', titreGare);
       this.title = titreGare.titre;
-      this.id = titreGare.id
+      this.id = titreGare.id;
 
       this.url = 'https://api.sncf.com/v1/coverage/sncf/stop_points/'+this.id+'/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6'
-      console.log(this.url)
+      console.log(this.url);
 
       this.readAPI(this.url)
       .subscribe((data) => {
@@ -54,7 +54,7 @@ export class DetailGarePage implements OnInit {
 
             }
             this.schedules.push({heure:this.schedule.heure,destination:this.schedule.destination});
-            
+
           });
         });
         this.schedules.forEach(schedules => {
@@ -76,18 +76,6 @@ export class DetailGarePage implements OnInit {
           this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
         }
         console.log("this.destinations: ", this.destinations);
-        if(this.destinations.length != 0)
-        {
-          var divListCard = document.getElementById("listCard");
-          for (let i = 0; i < this.destinations.length; i++) {
-            // var newcardGare = document.createElement("div")
-            const newcardGare = this.cardGare
-              .replace("__heure__", this.destinations[i].heure)
-              .replace("__destination__", this.destinations[i].destination)
-              .replace("__date__", this.destinations[i].date);
-              divListCard.appendChild(this.htmlToElement(newcardGare));
-          }
-        }
 
       });
     });
@@ -119,7 +107,7 @@ export class DetailGarePage implements OnInit {
     const minute = tabDate[1].substr(2,2);
     // console.log('heure: ',heure);
     // console.log('minute: ',minute);
-    
+
     const date = jour + "/" + mois + "/" + annee;
     const horaire = heure + ":" + minute;
 
@@ -130,28 +118,7 @@ export class DetailGarePage implements OnInit {
     this.navCtrl.navigateRoot(this.actualNav);
   }
 
-  htmlToElement = (html) => {
-    const template = document.createElement("template");
-    html = html.trim(); // Never return a text node of whitespace as the result
-    template.innerHTML = html;
-    return template.content.firstChild;
-  };
 
-  cardGare = `
-        <ion-card>
-          <ion-item>
-            <ion-card-title>
-              __heure__
-            </ion-card-title>
-            <ion-card-content style="margin-left: 18%;font-size: 20px;">
-              __destination__
-            </ion-card-content>
-          </ion-item>
-          <ion-item>
-            <ion-card-subtitle>
-              __date__
-            </ion-card-subtitle>
-          </ion-item>
-        </ion-card> `;
+
 
 }
