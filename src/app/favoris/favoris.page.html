@@ -13,12 +13,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="connecter === false" class="aligner" >
-    <ion-button class="aligner" (click)="connecter = true;" >Se connecter</ion-button>
-    <ion-button class="aligner" (click)="goToCreationProfil()" >Créer un compte</ion-button>
+  <div *ngIf="!connecte" class="aligner" >
+    <ion-button class="aligner" (click)="goToCreationProfil(true)" >Se connecter</ion-button>
+    <ion-button class="aligner" (click)="goToCreationProfil(false)" >Créer un compte</ion-button>
   </div>
 
-  <div *ngIf="connecter" >
+  <div *ngIf="connecte" >
     <ion-card>
       <ion-item>
         <ion-card-title>Nom gare</ion-card-title>

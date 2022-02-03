@@ -118,7 +118,4 @@ export class DetailGarePage implements OnInit {
     this.navCtrl.navigateRoot(this.actualNav);
   }
 
-
-
-
 }

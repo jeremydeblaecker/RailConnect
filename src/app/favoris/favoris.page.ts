@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 
 
@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 })
 export class FavorisPage implements OnInit {
 
-  connecter: any = false;
+  connecte: any;
   oldNav: any;
 
   constructor(
@@ -22,14 +22,19 @@ export class FavorisPage implements OnInit {
       if(actualNav){
         this.oldNav = actualNav;
       }
-      console.log('actualNav', actualNav);
+      // console.log('actualNav', actualNav);
       this.storage.set('actualNav','tabs/favoris');
+    });
+
+    this.storage.get('checkConnecte').then((connecte) => {
+        this.connecte = connecte;
+        console.log("connecte: ",connecte);
     });
   }
 
   ngOnInit()
   {
-    console.log('this.oldNav', this.oldNav);
+    // console.log('this.oldNav', this.oldNav);
 
   }
 
@@ -48,9 +53,13 @@ export class FavorisPage implements OnInit {
     }
   }
 
-  goToCreationProfil()
+  goToCreationProfil(connexion)
   {
+    this.storage.set('actualNav','tabs/favoris');
+    this.storage.set('connexion',connexion);
+
     this.navCtrl.navigateRoot('creation-profil');
+
   }
 
 

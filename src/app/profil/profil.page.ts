@@ -1,19 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'app-profil',
   templateUrl: 'profil.page.html',
   styleUrls: ['profil.page.scss']
 })
-export class ProfilPage {
+export class ProfilPage implements OnInit {
 
+  connecte: any;
   modif: any = false;
+
+  oldNav: any;
+
   pseudo: any = 'mon pseudo';
   mail: any = 'monMail@mail.com';
   actualPassword: any = '';
   newPassword: any;
 
-  constructor() {}
+  constructor(
+    public navCtrl: NavController,
+    private storage: Storage,
+  ) {
+    this.storage.get('actualNav').then((actualNav) => {
+      if(actualNav){
+        this.oldNav = actualNav;
+      }
+      // console.log('actualNav', actualNav);
+      this.storage.set('actualNav','tabs/profil');
+    });
+
+    this.storage.get('checkConnecte').then((connecte) => {
+      this.connecte = connecte;
+      console.log("connecte: ",connecte);
+  });
+  }
+
+  ngOnInit()
+  {
+    // console.log('this.oldNav', this.oldNav);
+
+  }
 
   modifierInfos()
   {
@@ -49,6 +78,19 @@ export class ProfilPage {
       eyeChange.name = 'eye-outline';
       input.type = 'password';
     }
+  }
+
+  goToCreationProfil(connexion)
+  {
+    this.storage.set('actualNav','tabs/profil');
+    this.storage.set('connexion',connexion);
+
+    this.navCtrl.navigateRoot('creation-profil');
+  }
+
+  deconnexion(){
+    this.storage.set('checkConnecte',false);
+    window.location.reload();
   }
 
 }

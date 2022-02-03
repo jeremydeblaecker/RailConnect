@@ -22,14 +22,14 @@ export class AccueilPage implements OnInit{
     private http: HttpClient,
     private storage: Storage,
     public navCtrl: NavController,
-    
+
   ) {
      this.storage.set('actualNav','tabs/accueil');
     }
 
   ngOnInit()
   {
-   
+
     this.readAPI('https://api.sncf.com/v1/coverage/sncf/coord/5.443867%3B43.524823/places_nearby?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
     .subscribe((data) => {
       console.log(data);
@@ -48,11 +48,7 @@ export class AccueilPage implements OnInit{
         console.log('DataApi', val);
       });
     });
-    
-    this.storage.get('actualNav').then((actualNav) => {
-      console.log('actualNav', actualNav);
-    });
-    
+
   }
 
     readAPI(URL: string) {
@@ -68,7 +64,7 @@ export class AccueilPage implements OnInit{
       else{
         ionStar.name = 'star-outline';
         ionStar.classList.remove('gold');
-        
+
       }
     }
 

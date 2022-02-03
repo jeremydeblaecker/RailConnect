@@ -9,12 +9,14 @@ import { Storage } from '@ionic/storage';
 })
 export class CreationProfilPage implements OnInit {
 
-  connexion: any = false;
+  connexion: any;
+  titre: any;
+  oldNav: any;
+
   pseudo: any = '';
   mail: any = '';
   password: any = '';
   confPassword: any;
-  oldNav: any;
 
   constructor(
     public navCtrl: NavController,
@@ -26,16 +28,29 @@ export class CreationProfilPage implements OnInit {
         this.oldNav = actualNav;
       }
     });
+    this.storage.get('connexion').then((connexion) => {
+      this.connexion = connexion;
+      if(connexion)
+        this.titre = "Se connecter";
+      else
+        this.titre = "Créer un compte";
+    });
   }
 
   ngOnInit() {
 
-    console.log('this.oldNav: ', this.oldNav);
+    // console.log('this.oldNav: ', this.oldNav);
 
   }
 
   creationCompte(){
+    this.storage.set('checkConnecte', true);
+    this.backButton();
+  }
 
+  connexionCompte(){
+    this.storage.set('checkConnecte', true);
+    this.backButton();
   }
 
   visibilityPassword(id){
@@ -55,7 +70,7 @@ export class CreationProfilPage implements OnInit {
   }
 
   backButton(){
-    console.log('this.oldNav: ', this.oldNav);
+    // console.log('this.oldNav: ', this.oldNav);
     this.navCtrl.navigateRoot(this.oldNav);
   }
 }

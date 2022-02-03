@@ -19,16 +19,23 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="modif === false" class="aligner">
+  <div *ngIf="!connecte" class="aligner" >
+    <ion-button class="aligner" (click)="goToCreationProfil(true)" >Se connecter</ion-button>
+    <ion-button class="aligner" (click)="goToCreationProfil(false)" >Créer un compte</ion-button>
+  </div>
+
+  <div *ngIf="!modif && connecte" class="aligner">
     <ion-text>
     <h1>Informations</h1>
     <h2>Votre pseudo: <p>{{ pseudo }}</p></h2>
     <h2>Votre mail: <p>{{ mail }}</p></h2>
   </ion-text>
   <ion-button (click)="modif = true;" >Modifier informations</ion-button>
+  <ion-button (click)="deconnexion()" >Se déconnecter</ion-button>
+
   </div>
 
-  <div *ngIf="modif" class="aligner">
+  <div *ngIf="modif && connecte" class="aligner">
     <ion-text>
       <h1>Informations</h1>
 

@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title class="text-header-center" color="light">
-      Créer un compte
+      {{ titre }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -35,7 +35,7 @@
           <ion-icon  id="icon_Password" name="eye-outline" button (click)="visibilityPassword($event.target.id)" style="cursor: pointer;"></ion-icon>
         </ion-item>
       </h3>
-      <h3 class="aligner">Confirmer mot de passe:
+      <h3 *ngIf="!connexion"  class="aligner">Confirmer mot de passe:
 
         <ion-item class="aligner">
           <ion-input id="input_ConfPassword" type="password" value=""></ion-input>
@@ -44,7 +44,8 @@
       </h3>
     </ion-text>
 
-    <ion-button (click)="creationCompte()">Valider</ion-button>
+    <ion-button *ngIf="!connexion;" (click)="creationCompte()">Valider</ion-button>
+    <ion-button *ngIf="connexion;" (click)="connexionCompte()">Valider</ion-button>
   </div>
 
 </ion-content>
