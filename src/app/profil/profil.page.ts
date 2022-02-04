@@ -90,7 +90,7 @@ export class ProfilPage implements OnInit {
 
   deconnexion(){
     this.storage.set('checkConnecte',false);
-    window.location.reload();
+    this.connecte = false;
   }
 
 }

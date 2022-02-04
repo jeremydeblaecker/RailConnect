@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import {NavController} from '@ionic/angular';
@@ -10,7 +10,10 @@ import {NavController} from '@ionic/angular';
 })
 export class AccueilPage implements OnInit{
 
+  @Input() listFavoris: any [] = [];
+
   data: any;
+  // listFavoris: any [] = [];
 
   stationData = {
       nom: '',
@@ -24,7 +27,7 @@ export class AccueilPage implements OnInit{
     public navCtrl: NavController,
 
   ) {
-     this.storage.set('actualNav','tabs/accueil');
+    this.storage.set('actualNav','tabs/accueil');
     }
 
   ngOnInit()
@@ -49,31 +52,62 @@ export class AccueilPage implements OnInit{
       });
     });
 
-  }
-
-    readAPI(URL: string) {
-      return this.http.get(URL);
-    }
-
-    favoris(){
-      const ionStar = (<HTMLIonIconElement>document.getElementById('ionStar'));
-      if (ionStar.name === 'star-outline' ){
-        ionStar.name = 'star';
-        ionStar.classList.add('gold');
-      }
-      else{
-        ionStar.name = 'star-outline';
-        ionStar.classList.remove('gold');
-
-      }
-    }
-
-    goToGare(){
-      this.storage.set('titreGare', { 'titre' :this.stationData.nom, 'id' :this.stationData.id});
-      this.navCtrl.navigateRoot('tabs/detail-gare');
-    }
+    this.storage.get('listFavoris').then((listFavoris) => {
+      if(listFavoris)
+        this.listFavoris = listFavoris;
+      console.log("listFavoris: ",listFavoris);
+    });
 
   }
+
+  ionViewWillEnter() {
+    this.storage.get('listFavoris').then((listFavoris) => {
+      if (listFavoris)
+        this.listFavoris = listFavoris;
+      console.log("listFavoris: ",listFavoris);
+    });
+  }
+
+  readAPI(URL: string) {
+    return this.http.get(URL);
+  }
+
+  addFavoris(){
+    const ionStar = (<HTMLIonIconElement>document.getElementById('ionStar'));
+    const tabId = ionStar.parentElement.id.split(' ');
+    if (ionStar.name === 'star-outline' ){
+      ionStar.name = 'star';
+      ionStar.classList.add('gold');
+      this.listFavoris.push(
+        {
+          "id": tabId[0],
+          "nom": tabId[1]
+        }
+      )
+    }
+    else{
+      ionStar.name = 'star-outline';
+      ionStar.classList.remove('gold');
+      for (let i = 0; i < this.listFavoris.length; i++)
+      {
+        if(this.listFavoris[i].id === tabId[0])
+        {
+          this.listFavoris[i].nom;
+          this.listFavoris.splice(i);
+        }
+      }
+    }
+    this.storage.set('listFavoris', this.listFavoris);
+    console.log("listFavoris: ",this.listFavoris);
+  }
+
+  goToGare(){
+    this.storage.set('actualNav','tabs/accueil');
+    this.storage.set('titreGare', { 'titre' :this.stationData.nom, 'id' :this.stationData.id});
+    this.navCtrl.navigateRoot('tabs/detail-gare');
+  }
+
+}
 
 
 

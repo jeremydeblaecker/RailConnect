@@ -16,12 +16,12 @@
   <ion-searchbar></ion-searchbar>
 
   <ion-card >
-    <ion-item>
+    <ion-item id="{{ stationData.id }} {{ stationData.nom }}">
       <div style="width: 100%;" button (click)="goToGare()">
-        <ion-card-title >{{ stationData.nom }}</ion-card-title>
+        <ion-card-title id="ionTitle">{{ stationData.nom }}</ion-card-title>
       </div>
-      <ion-icon class="starIcon" style="cursor: pointer;" id="ionStar" button (click)="favoris()" name="star-outline" slot="end"></ion-icon>
-    </ion-item >
+      <ion-icon class="starIcon" style="cursor: pointer;" id="ionStar" button (click)="addFavoris()" name="star-outline" slot="end"></ion-icon>
+    </ion-item>
     <ion-item button (click)="goToGare()">
       <ion-card-subtitle>Distance (mètres) : {{ stationData.distance }} </ion-card-subtitle>
     </ion-item>

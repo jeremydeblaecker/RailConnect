@@ -12,6 +12,7 @@ export class FavorisPage implements OnInit {
 
   connecte: any;
   oldNav: any;
+  listFavoris: any [];
 
   constructor(
     public navCtrl: NavController,
@@ -28,7 +29,7 @@ export class FavorisPage implements OnInit {
 
     this.storage.get('checkConnecte').then((connecte) => {
         this.connecte = connecte;
-        console.log("connecte: ",connecte);
+        // console.log("connecte: ",connecte);
     });
   }
 
@@ -38,19 +39,41 @@ export class FavorisPage implements OnInit {
 
   }
 
-  favoris()
-  {
-    const ionStar = (document.getElementById('ionStarfav') as HTMLIonIconElement);
+  ionViewWillEnter() { // appeler à chaque entré
+    this.storage.get('listFavoris').then((listFavoris) => {
+      if (listFavoris)
+        this.listFavoris = listFavoris;
+      console.log("listFavoris: ",listFavoris);
+    });
+  }
+
+  addFavoris(){
+    const ionStar = (<HTMLIonIconElement>document.getElementById('ionStar'));
+    const tabId = ionStar.parentElement.id.split(' ');
     if (ionStar.name === 'star-outline' ){
       ionStar.name = 'star';
       ionStar.classList.add('gold');
-
+      this.listFavoris.push(
+        {
+          "id": tabId[0],
+          "nom": tabId[1]
+        }
+      )
     }
     else{
       ionStar.name = 'star-outline';
       ionStar.classList.remove('gold');
-
+      for (let i = 0; i < this.listFavoris.length; i++)
+      {
+        if(this.listFavoris[i].id === tabId[0])
+        {
+          this.listFavoris[i].nom;
+          this.listFavoris.splice(i);
+        }
+      }
     }
+    this.storage.set('listFavoris', this.listFavoris);
+    console.log("listFavoris: ",this.listFavoris);
   }
 
   goToCreationProfil(connexion)
