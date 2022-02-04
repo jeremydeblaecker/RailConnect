@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import {NavController} from '@ionic/angular';
+import { StatusBar } from '@capacitor/status-bar'
 
 @Component({
   selector: 'app-accueil',
@@ -14,7 +15,7 @@ export class AccueilPage implements OnInit{
 
   data: any;
   // listFavoris: any [] = [];
-
+  color: any= '#DA2700';
   stationData = {
       nom: '',
       distance: '',
@@ -28,6 +29,9 @@ export class AccueilPage implements OnInit{
 
   ) {
     this.storage.set('actualNav','tabs/accueil');
+    StatusBar.setOverlaysWebView({ overlay: true });
+    // StatusBar.show()
+    // StatusBar.setBackgroundColor('black');
     }
 
   ngOnInit()
