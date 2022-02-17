@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { AuthService } from '../auth/AuthService';
 
 @Component({
   selector: 'app-creation-profil',
@@ -21,6 +22,7 @@ export class CreationProfilPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
+    public authService: AuthService
 
   ) {
     this.storage.get('actualNav').then((actualNav) => {

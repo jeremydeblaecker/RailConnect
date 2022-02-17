@@ -25,13 +25,13 @@
       <h3 class="aligner">Mail:
 
         <ion-item class="aligner">
-          <ion-input id="input_Mail" type="email" value="{{ mail }}"></ion-input>
+          <ion-input id="input_Mail" type="email" value="{{ mail }}" #userMail></ion-input>
         </ion-item>
       </h3>
       <h3 class="aligner">Mot de passe:
 
         <ion-item class="aligner">
-          <ion-input id="input_Password" type="password" value=""></ion-input>
+          <ion-input id="input_Password" type="password" value="" #userPwd></ion-input>
           <ion-icon  id="icon_Password" name="eye-outline" button (click)="visibilityPassword($event.target.id)" style="cursor: pointer;"></ion-icon>
         </ion-item>
       </h3>
@@ -44,8 +44,8 @@
       </h3>
     </ion-text>
 
-    <ion-button *ngIf="!connexion;" (click)="creationCompte()">Valider</ion-button>
-    <ion-button *ngIf="connexion;" (click)="connexionCompte()">Valider</ion-button>
+    <ion-button *ngIf="!connexion;" (click)="authService.SignUp(userMail.value, userPwdvalue)">Valider</ion-button>
+    <ion-button *ngIf="connexion;" (click)="authService.SignIn(userMail.value, userPwdvalue)">Valider</ion-button>
   </div>
 
 </ion-content>
