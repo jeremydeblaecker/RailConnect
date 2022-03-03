@@ -27,7 +27,6 @@
   <div *ngIf="!modif && connecte" class="aligner">
     <ion-text>
     <h1>Informations</h1>
-    <h2>Votre pseudo: <p>{{ pseudo }}</p></h2>
     <h2>Votre mail: <p>{{ mail }}</p></h2>
   </ion-text>
   <ion-button (click)="modif = true;" >Modifier informations</ion-button>
@@ -38,13 +37,6 @@
   <div *ngIf="modif && connecte" class="aligner">
     <ion-text>
       <h1>Informations</h1>
-
-      <h3 class="aligner">Votre pseudo:
-
-        <ion-item class="aligner">
-          <ion-input id="input_Pseudo" type="username" value="{{ pseudo }}"></ion-input>
-        </ion-item>
-      </h3>
       <h3 class="aligner">Votre mail:
 
         <ion-item class="aligner">

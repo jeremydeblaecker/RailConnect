@@ -17,7 +17,6 @@ export class ProfilPage implements OnInit {
   oldNav: any;
 
 
-  pseudo: any = 'mon pseudo';
   mail: any;
   user: any;
   actualPassword: any;
@@ -54,20 +53,17 @@ export class ProfilPage implements OnInit {
 
   modifierInfos()
   {
-    const inputPseudo = (document.getElementById('inputPseudo') as HTMLInputElement);
     const inputMail = (document.getElementById('inputMail') as HTMLInputElement);
     const inputOldPassword = (document.getElementById('inputOldPassword') as HTMLInputElement);
     const inputNewPassword = (document.getElementById('inputNewPassword') as HTMLInputElement);
 
-    console.log('inputPseudo.value: ', inputPseudo.value);
     console.log('inputMail.value: ', inputMail.value);
     console.log('inputOldPassword.value: ', inputOldPassword.value);
     console.log('inputNewPassword.value: ', inputNewPassword.value);
 
-    this.pseudo = inputPseudo.value;
     this.newPassword = inputNewPassword.value;
 
-    if(this.actualPassword === inputOldPassword.value || this.pseudo !== inputPseudo.value || this.mail !== inputMail.value){
+    if(this.actualPassword === inputOldPassword.value ||  this.mail !== inputMail.value){
       this.modif = false;
     }
   }
