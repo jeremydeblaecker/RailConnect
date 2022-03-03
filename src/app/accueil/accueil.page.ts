@@ -111,6 +111,14 @@ export class AccueilPage implements OnInit{
     this.navCtrl.navigateRoot('tabs/detail-gare');
   }
 
+  searchGare(input){
+    this.readAPI('https://api.sncf.com/v1/coverage/sncf/places?q='+input+'&key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
+    .subscribe((data) => {
+      
+
+    })
+  }
+
 }
 
 
