@@ -44,8 +44,8 @@
       </h3>
     </ion-text>
 
-    <ion-button *ngIf="!connexion;" (click)="authService.SignUp(userMail.value, userPwdvalue)">Valider</ion-button>
-    <ion-button *ngIf="connexion;" (click)="authService.SignIn(userMail.value, userPwdvalue)">Valider</ion-button>
+    <ion-button *ngIf="!connexion;" (click)="creationCompte(userMail.value, userPwd.value)">Valider</ion-button>
+    <ion-button *ngIf="connexion;" (click)="connexionCompte(userMail.value, userPwd.value)">Valider</ion-button>
   </div>
 
 </ion-content>

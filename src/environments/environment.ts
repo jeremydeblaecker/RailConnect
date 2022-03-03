@@ -11,7 +11,8 @@ export const environment = {
     projectId: "railconnect-2dd70",
     storageBucket: "railconnect-2dd70.appspot.com",
     messagingSenderId: "517935358085",
-    appId: "1:517935358085:web:e27c522948e8405cee49ec"
+    appId: "1:517935358085:web:e27c522948e8405cee49ec",
+    measurementId: "G-WXJ4YPS6MV"
   }
 };
 

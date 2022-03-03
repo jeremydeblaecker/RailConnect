@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { AuthService } from '../auth/AuthService';
 
 
 @Component({
@@ -15,14 +16,17 @@ export class ProfilPage implements OnInit {
 
   oldNav: any;
 
+
   pseudo: any = 'mon pseudo';
-  mail: any = 'monMail@mail.com';
-  actualPassword: any = '';
+  mail: any;
+  user: any;
+  actualPassword: any;
   newPassword: any;
 
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
+    public authService : AuthService
   ) {
     this.storage.get('actualNav').then((actualNav) => {
       if(actualNav){
@@ -36,12 +40,16 @@ export class ProfilPage implements OnInit {
       this.connecte = connecte;
       console.log("connecte: ",connecte);
   });
-  }
+
+  
+   }
 
   ngOnInit()
   {
-    // console.log('this.oldNav', this.oldNav);
-
+    this.user = this.storage.get('user').then((user) =>{
+      console.log("user", user.email);
+      this.mail= user.email
+    });
   }
 
   modifierInfos()
@@ -89,8 +97,10 @@ export class ProfilPage implements OnInit {
   }
 
   deconnexion(){
-    this.storage.set('checkConnecte',false);
-    this.connecte = false;
+    this.authService.SignOut()
+    .then(() => {this.storage.set('checkConnecte',false);
+    this.connecte = false;})
+    
   }
 
 }

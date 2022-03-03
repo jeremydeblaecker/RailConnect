@@ -45,17 +45,19 @@ export class CreationProfilPage implements OnInit {
 
   }
 
-  creationCompte(){
-    this.storage.set('checkConnecte', true);
-    this.backButton();
+  creationCompte(email : string, pwd : string){
+    this.authService.SignIn(email,pwd)
+    .then(()=>{this.storage.set('checkConnecte', true);
+    this.backButton();});
   }
 
-  connexionCompte(){
-    this.storage.set('checkConnecte', true);
-    this.backButton();
+  connexionCompte(email : string, pwd : string){
+    this.authService.SignIn(email,pwd)
+    .then(()=>{this.storage.set('checkConnecte', true);
+    this.backButton();});
   }
 
-  visibilityPassword(id){
+  visibilityPassword(id : string){
     const eyeChange = (document.getElementById(id) as HTMLIonIconElement);
     let tabId: any[] = [];
     tabId = eyeChange.id.split('_');
