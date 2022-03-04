@@ -23,7 +23,10 @@ export class CreationProfilPage implements OnInit {
     private storage: Storage,
     public authService: AuthService
 
-  ) {
+  ) {}
+
+  ngOnInit() {
+
     this.storage.get('actualNav').then((actualNav) => {
       if(actualNav){
         this.oldNav = actualNav;
@@ -36,11 +39,6 @@ export class CreationProfilPage implements OnInit {
       else
         this.titre = "Créer un compte";
     });
-  }
-
-  ngOnInit() {
-
-    // console.log('this.oldNav: ', this.oldNav);
 
   }
 

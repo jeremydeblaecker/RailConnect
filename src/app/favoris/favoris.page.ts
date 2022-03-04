@@ -18,7 +18,10 @@ export class FavorisPage implements OnInit {
     public navCtrl: NavController,
     private storage: Storage,
 
-  ) {
+  ) {}
+
+  ngOnInit()
+  {
     this.storage.get('actualNav').then((actualNav) => {
       if(actualNav){
         this.oldNav = actualNav;
@@ -31,12 +34,6 @@ export class FavorisPage implements OnInit {
         this.connecte = connecte;
         // console.log("connecte: ",connecte);
     });
-  }
-
-  ngOnInit()
-  {
-    // console.log('this.oldNav', this.oldNav);
-
   }
 
   ionViewWillEnter() { // appeler à chaque entré
@@ -67,17 +64,26 @@ export class FavorisPage implements OnInit {
       {
         if(this.listFavoris[i].id === tabId[0])
         {
-          if(i == 0)
-            this.listFavoris.pop();
+          if(i == 0 && this.listFavoris.length == 1)
+            console.log("pop: ", this.listFavoris.pop());
+          else if (i == 0)
+            console.log("shift: ", this.listFavoris.shift());
           else
-            this.listFavoris.splice(i,i);
-
+            console.log("splice: ", this.listFavoris.splice(i,1));
         }
-        
       }
     }
     this.storage.set('listFavoris', this.listFavoris);
     console.log("listFavoris: ",this.listFavoris);
+  }
+
+  goToGare(id){
+    const tabId = id.split('*');
+    console.log("nom: ", tabId[1]);
+    console.log("id: ", tabId[0]);
+    this.storage.set('actualNav','tabs/accueil');
+    this.storage.set('titreGare', { 'titre' : tabId[1], 'id' : tabId[0]});
+    this.navCtrl.navigateRoot('tabs/detail-gare');
   }
 
   goToCreationProfil(connexion)

@@ -29,13 +29,12 @@ export class AccueilPage implements OnInit{
     private storage: Storage,
     public navCtrl: NavController,
 
-  ) {
-      this.storage.set('actualNav','tabs/accueil');
-      StatusBar.setOverlaysWebView({ overlay: true });
-    }
+  ) {}
 
   ngOnInit()
   {
+    this.storage.set('actualNav','tabs/accueil');
+    StatusBar.setOverlaysWebView({ overlay: true });
 
     this.readAPI('https://api.sncf.com/v1/coverage/sncf/coord/5.443867%3B43.524823/places_nearby?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
     .subscribe((data) => {
@@ -65,11 +64,15 @@ export class AccueilPage implements OnInit{
   }
 
   ionViewWillEnter() {
+    this.deleteStar();
     this.storage.get('listFavoris').then((listFavoris) => {
-      if (listFavoris)
+      if (listFavoris){
         this.listFavoris = listFavoris;
+        this.searchFavoris();
+      }
       console.log("listFavoris: ",listFavoris);
     });
+    
   }
 
   readAPI(URL: string) {
@@ -96,13 +99,13 @@ export class AccueilPage implements OnInit{
       {
         if(this.listFavoris[i].id === tabId[0])
         {
-          if(i == 0)
-            this.listFavoris.pop();
+          if(i == 0 && this.listFavoris.length == 1)
+            console.log("pop: ", this.listFavoris.pop());
+          else if (i == 0)
+            console.log("shift: ", this.listFavoris.shift());
           else
-            this.listFavoris.splice(i,i);
-
+            console.log("splice: ", this.listFavoris.splice(i,1));
         }
-        
       }
     }
     this.storage.set('listFavoris', this.listFavoris);
@@ -110,13 +113,11 @@ export class AccueilPage implements OnInit{
   }
 
   goToGare(id){
-    console.log("🚀 ~ file: accueil.page.ts ~ line 111 ~ AccueilPage ~ goToGare ~ id", id)
-    const divCardTitle = (<HTMLElement>document.getElementById(id));
-    let nom = divCardTitle.parentElement.id;
-    console.log("nom: ", nom);
-    console.log("id: ", id);
+    const tabId = id.split('*');
+    console.log("nom: ", tabId[1]);
+    console.log("id: ", tabId[0]);
     this.storage.set('actualNav','tabs/accueil');
-    this.storage.set('titreGare', { 'titre' : nom, 'id' : id});
+    this.storage.set('titreGare', { 'titre' : tabId[1], 'id' : tabId[0]});
     this.navCtrl.navigateRoot('tabs/detail-gare');
   }
 
@@ -140,26 +141,40 @@ export class AccueilPage implements OnInit{
         }
         console.log("🚀 ~ file: accueil.page.ts ~ line 128 ~ AccueilPage ~ .subscribe ~ this.listGares", this.listGares);
         setTimeout(() => {
-          for (let n = 0; n < this.listFavoris.length; n++)
-          {
-            for (let i = 0; i < this.listGares.length; i++)
-            {
-              if(this.listGares[i].id === this.listFavoris[n].id)
-              {
-                console.log("id: ",this.listGares[i].id + "--" + this.listGares[i].nom)
-                const ionStar = (<HTMLIonIconElement>document.getElementById(this.listGares[i].id + "--" + this.listGares[i].nom));
-                console.log("ionStar: ", ionStar)
-                ionStar.name = 'star';
-                ionStar.classList.add('gold');
-              }
-            }
-          }
+          this.searchFavoris();
         }, 1);
       })
     }
   }
 
-  
+  searchFavoris(){
+    for (let n = 0; n < this.listFavoris.length; n++)
+    {
+      for (let i = 0; i < this.listGares.length; i++)
+      {
+        const ionStar = (<HTMLIonIconElement>document.getElementById(this.listGares[i].id + "--" + this.listGares[i].nom));
+        // console.log("id: ",this.listGares[i].id + "--" + this.listGares[i].nom);
+        // console.log("ionStar: ", ionStar);
+
+        if(this.listGares[i].id === this.listFavoris[n].id)
+        {
+          ionStar.name = 'star';
+          ionStar.classList.add('gold');
+        }
+      }
+    }
+  }
+
+  deleteStar(){
+    for (let i = 0; i < this.listGares.length; i++)
+    {
+      const ionStar = (<HTMLIonIconElement>document.getElementById(this.listGares[i].id + "--" + this.listGares[i].nom));
+      if(ionStar.name == 'star'){
+        ionStar.name = 'star-outline';
+        ionStar.classList.remove('gold');
+      }
+    }
+  }
 
 }
 
