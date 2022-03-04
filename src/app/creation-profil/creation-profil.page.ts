@@ -14,7 +14,6 @@ export class CreationProfilPage implements OnInit {
   titre: any;
   oldNav: any;
 
-  pseudo: any = '';
   mail: any = '';
   password: any = '';
   confPassword: any;

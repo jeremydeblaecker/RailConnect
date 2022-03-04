@@ -12,6 +12,8 @@ import { StatusBar } from '@capacitor/status-bar'
 export class AccueilPage implements OnInit{
 
   @Input() listFavoris: any [] = [];
+  listGares: any [] = [];
+
 
   data: any;
   // listFavoris: any [] = [];
@@ -105,17 +107,36 @@ export class AccueilPage implements OnInit{
     console.log("listFavoris: ",this.listFavoris);
   }
 
-  goToGare(){
+  goToGare(id){
+    console.log("🚀 ~ file: accueil.page.ts ~ line 111 ~ AccueilPage ~ goToGare ~ id", id)
+    const divCardTitle = (<HTMLElement>document.getElementById(id));
+    let nom = divCardTitle.parentElement.id;
+    console.log("nom: ", nom);
+    console.log("id: ", id);
     this.storage.set('actualNav','tabs/accueil');
-    this.storage.set('titreGare', { 'titre' :this.stationData.nom, 'id' :this.stationData.id});
+    this.storage.set('titreGare', { 'titre' : nom, 'id' : id});
     this.navCtrl.navigateRoot('tabs/detail-gare');
   }
 
   searchGare(input){
+    this.listGares = [];
+    console.log("🚀 ~ file: accueil.page.ts ~ line 115 ~ AccueilPage ~ searchGare ~ input", input)
     this.readAPI('https://api.sncf.com/v1/coverage/sncf/places?q='+input+'&key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
     .subscribe((data) => {
-      
-
+      console.log("🚀 ~ file: accueil.page.ts ~ line 120 ~ AccueilPage ~ .subscribe ~ data", data);
+      let listData = data['places'];
+      for (let i = 0; i < listData.length; i++)
+      {
+        // if(listData[i].embedded_type == "stop_area"){
+          this.listGares.push(
+            {
+              nom: listData[i].name,
+              id: listData[i].id
+            }
+          )
+        // }
+      }
+      console.log("🚀 ~ file: accueil.page.ts ~ line 128 ~ AccueilPage ~ .subscribe ~ this.listGares", this.listGares);
     })
   }
 
