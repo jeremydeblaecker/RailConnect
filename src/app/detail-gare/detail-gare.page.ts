@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class DetailGarePage implements OnInit {
   actualNav;
   destinations: any[] = [];
+  schedules: any = [];
   data: any;
   title: any;
   id: any;
@@ -20,24 +21,23 @@ export class DetailGarePage implements OnInit {
     destination:''
   };
 
-  schedules: any = [];
+  
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
     private http: HttpClient,
   ) {}
 
-  ngOnInit() {
-    this.storage.get('actualNav').then((nav) => {
-      console.log('actualNav: ', nav);
-      this.actualNav= nav;
-    });
+  ionViewWillEnter() {
     this.storage.get('titreGare').then((titreGare) => {
       console.log('titreGare: ', titreGare);
       this.title = titreGare.titre;
       this.id = titreGare.id;
+      this.destinations = [];
+      this.schedules = [];
+      console.log("VIDE this.destinations: ", this.destinations);
 
-      this.url = 'https://api.sncf.com/v1/coverage/sncf/stop_points/'+this.id+'/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6'
+      this.url = 'https://api.sncf.com/v1/coverage/sncf/stop_areas/'+this.id+'/stop_schedules?key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6'
       console.log(this.url);
 
       this.readAPI(this.url)
@@ -72,13 +72,24 @@ export class DetailGarePage implements OnInit {
         });
 
         console.log(this.schedules);
+        let tabDest = [];
         for (var i = 0; i < Object.keys(this.schedules).length; i++){
-          this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
+          tabDest = this.schedules[i].destination.split(':');
+          if(this.schedules[i].heure && tabDest[0] != "vehicle_journey")
+            this.destinations.push(this.formatDateHeure(this.schedules[i].heure, this.schedules[i].destination));
         }
         console.log("this.destinations: ", this.destinations);
 
       });
     });
+  }
+
+  ngOnInit() {
+    this.storage.get('actualNav').then((nav) => {
+      console.log('actualNav: ', nav);
+      this.actualNav= nav;
+    });
+    
   }
 
   readAPI(URL: string) {

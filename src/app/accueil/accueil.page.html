@@ -13,7 +13,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-searchbar (change)="searchGare($event.target.value)"></ion-searchbar>
+  <ion-searchbar (ionChange)="searchGare($event.target.value)"></ion-searchbar>
   
   <div>
     <ion-card *ngFor="let gare of listGares" >
