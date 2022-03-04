@@ -121,7 +121,7 @@ export class AccueilPage implements OnInit{
   searchGare(input){
     this.listGares = [];
     console.log("🚀 ~ file: accueil.page.ts ~ line 115 ~ AccueilPage ~ searchGare ~ input", input)
-    this.readAPI('https://api.sncf.com/v1/coverage/sncf/places?q='+input+'&count=500&type%5B%5D=stop_point&key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
+    this.readAPI('https://api.sncf.com/v1/coverage/sncf/places?q='+input+'&count=500&type%5B%5D=stop_area&key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
     .subscribe((data) => {
       console.log("🚀 ~ file: accueil.page.ts ~ line 120 ~ AccueilPage ~ .subscribe ~ data", data);
       let listData = data['places'];
