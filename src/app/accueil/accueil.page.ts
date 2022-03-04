@@ -30,10 +30,8 @@ export class AccueilPage implements OnInit{
     public navCtrl: NavController,
 
   ) {
-    this.storage.set('actualNav','tabs/accueil');
-    StatusBar.setOverlaysWebView({ overlay: true });
-    // StatusBar.show()
-    // StatusBar.setBackgroundColor('black');
+      this.storage.set('actualNav','tabs/accueil');
+      StatusBar.setOverlaysWebView({ overlay: true });
     }
 
   ngOnInit()
@@ -98,9 +96,13 @@ export class AccueilPage implements OnInit{
       {
         if(this.listFavoris[i].id === tabId[0])
         {
-          this.listFavoris[i].nom;
-          this.listFavoris.splice(i);
+          if(i == 0)
+            this.listFavoris.pop();
+          else
+            this.listFavoris.splice(i,i);
+
         }
+        
       }
     }
     this.storage.set('listFavoris', this.listFavoris);
@@ -118,27 +120,46 @@ export class AccueilPage implements OnInit{
     this.navCtrl.navigateRoot('tabs/detail-gare');
   }
 
-  searchGare(input){
-    this.listGares = [];
-    console.log("🚀 ~ file: accueil.page.ts ~ line 115 ~ AccueilPage ~ searchGare ~ input", input)
-    this.readAPI('https://api.sncf.com/v1/coverage/sncf/places?q='+input+'&count=500&type%5B%5D=stop_area&key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
-    .subscribe((data) => {
-      console.log("🚀 ~ file: accueil.page.ts ~ line 120 ~ AccueilPage ~ .subscribe ~ data", data);
-      let listData = data['places'];
-      for (let i = 0; i < listData.length; i++)
-      {
-
-        this.listGares.push(
+  searchGare(input)
+  {
+    if(input){
+      this.listGares = [];
+      // console.log("🚀 ~ file: accueil.page.ts ~ line 115 ~ AccueilPage ~ searchGare ~ input", input)
+      this.readAPI('https://api.sncf.com/v1/coverage/sncf/places?q='+input+'&count=500&type%5B%5D=stop_area&key=0dca33cf-7a3b-4c16-9baf-534bbdaf98b6')
+      .subscribe((data) => {
+        console.log("🚀 ~ file: accueil.page.ts ~ line 120 ~ AccueilPage ~ .subscribe ~ data", data);
+        let listData = data['places'];
+        for (let i = 0; i < listData.length; i++)
+        {
+          this.listGares.push(
+            {
+              nom: listData[i].stop_area.name,
+              id: listData[i].id
+            }
+          )
+        }
+        console.log("🚀 ~ file: accueil.page.ts ~ line 128 ~ AccueilPage ~ .subscribe ~ this.listGares", this.listGares);
+        setTimeout(() => {
+          for (let n = 0; n < this.listFavoris.length; n++)
           {
-            nom: listData[i].stop_area.name,
-            id: listData[i].id
+            for (let i = 0; i < this.listGares.length; i++)
+            {
+              if(this.listGares[i].id === this.listFavoris[n].id)
+              {
+                console.log("id: ",this.listGares[i].id + "--" + this.listGares[i].nom)
+                const ionStar = (<HTMLIonIconElement>document.getElementById(this.listGares[i].id + "--" + this.listGares[i].nom));
+                console.log("ionStar: ", ionStar)
+                ionStar.name = 'star';
+                ionStar.classList.add('gold');
+              }
+            }
           }
-        )
-
-      }
-      console.log("🚀 ~ file: accueil.page.ts ~ line 128 ~ AccueilPage ~ .subscribe ~ this.listGares", this.listGares);
-    })
+        }, 1);
+      })
+    }
   }
+
+  
 
 }
 

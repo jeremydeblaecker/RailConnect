@@ -67,7 +67,6 @@ export class FavorisPage implements OnInit {
       {
         if(this.listFavoris[i].id === tabId[0])
         {
-          console.log("i: ", i);
           if(i == 0)
             this.listFavoris.pop();
           else
