@@ -47,9 +47,9 @@ export class FavorisPage implements OnInit {
     });
   }
 
-  addFavoris(){
-    const ionStar = (<HTMLIonIconElement>document.getElementById('ionStar'));
-    const tabId = ionStar.parentElement.id.split(' ');
+  addFavoris(id){
+    const ionStar = (<HTMLIonIconElement>document.getElementById(id));
+    const tabId = id.split('--');
     if (ionStar.name === 'star-outline' ){
       ionStar.name = 'star';
       ionStar.classList.add('gold');
@@ -67,9 +67,14 @@ export class FavorisPage implements OnInit {
       {
         if(this.listFavoris[i].id === tabId[0])
         {
-          this.listFavoris[i].nom;
-          this.listFavoris.splice(i);
+          console.log("i: ", i);
+          if(i == 0)
+            this.listFavoris.pop();
+          else
+            this.listFavoris.splice(i,i);
+
         }
+        
       }
     }
     this.storage.set('listFavoris', this.listFavoris);

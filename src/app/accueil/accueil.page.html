@@ -21,25 +21,12 @@
         <ion-item style="width: 100%;" id="{{ gare.id }}" (click)="goToGare($event.target.id)">
           <ion-card-title>{{ gare.nom }}</ion-card-title>
         </ion-item>
-        <ion-icon style="cursor: pointer;" id="ionStarfav" button (click)="addFavoris()" name="star-outline" slot="end"></ion-icon>
+        <ion-icon style="cursor: pointer;" id="{{ gare.id }}--{{ gare.nom }}" button (click)="addFavoris($event.target.id)" name="star-outline" slot="end"></ion-icon>
       </ion-item>
       <ion-item id="{{ gare.id }}" (click)="goToGare($event.target.id)">
         <ion-card-subtitle></ion-card-subtitle>
       </ion-item>
     </ion-card>
   </div>
-
-  <!-- <ion-card>
-    <ion-item id="{{ stationData.id }} {{ stationData.nom }}">
-      <div style="width: 100%;" button (click)="goToGare()">
-        <ion-card-title id="ionTitle">{{ stationData.nom }}</ion-card-title>
-      </div>
-      <ion-icon class="starIcon" style="cursor: pointer;" id="ionStar" button (click)="addFavoris()" name="star-outline" slot="end"></ion-icon>
-    </ion-item>
-    <ion-item button (click)="goToGare()">
-      <ion-card-subtitle>Distance (mètres) : {{ stationData.distance }} </ion-card-subtitle>
-    </ion-item>
-  </ion-card> -->
-
 
 </ion-content>

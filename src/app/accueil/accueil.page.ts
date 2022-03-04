@@ -78,9 +78,9 @@ export class AccueilPage implements OnInit{
     return this.http.get(URL);
   }
 
-  addFavoris(){
-    const ionStar = (<HTMLIonIconElement>document.getElementById('ionStar'));
-    const tabId = ionStar.parentElement.id.split(' ');
+  addFavoris(id){
+    const ionStar = (<HTMLIonIconElement>document.getElementById(id));
+    const tabId = id.split('--');
     if (ionStar.name === 'star-outline' ){
       ionStar.name = 'star';
       ionStar.classList.add('gold');
@@ -127,14 +127,14 @@ export class AccueilPage implements OnInit{
       let listData = data['places'];
       for (let i = 0; i < listData.length; i++)
       {
-        // if(listData[i].embedded_type == "stop_area"){
-          this.listGares.push(
-            {
-              nom: listData[i].name,
-              id: listData[i].id
-            }
-          )
-        // }
+
+        this.listGares.push(
+          {
+            nom: listData[i].stop_area.name,
+            id: listData[i].id
+          }
+        )
+
       }
       console.log("🚀 ~ file: accueil.page.ts ~ line 128 ~ AccueilPage ~ .subscribe ~ this.listGares", this.listGares);
     })
