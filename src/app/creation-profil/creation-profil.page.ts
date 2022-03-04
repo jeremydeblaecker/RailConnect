@@ -45,7 +45,7 @@ export class CreationProfilPage implements OnInit {
   }
 
   creationCompte(email : string, pwd : string){
-    this.authService.SignIn(email,pwd)
+    this.authService.SignUp(email,pwd)
     .then(()=>{this.storage.set('checkConnecte', true);
     this.backButton();});
   }
