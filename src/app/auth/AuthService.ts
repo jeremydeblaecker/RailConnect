@@ -111,4 +111,16 @@ export class AuthService {
     await this.afAuth.signOut();
       this.storage.remove('user');
   }
+
+  async editUser(email:string,oldpassword:string,password:string){
+    try{
+      let user = await this.afAuth.currentUser;
+      window.alert("user : "+password);
+      //let _credential = firebase.auth.EmailAuthProvider.credential(user.email,oldpassword)
+      user.updatePassword(password);
+    }
+    catch (error){
+      window.alert(error);
+    }
+  }
 }

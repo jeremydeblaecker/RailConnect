@@ -40,26 +40,26 @@
       <h3 class="aligner">Votre mail:
 
         <ion-item class="aligner">
-          <ion-input id="input_Mail" type="email" value="{{ mail }}"></ion-input>
+          <ion-input id="input_Mail" type="email" value="{{ mail }}" #userMail></ion-input>
         </ion-item>
       </h3>
       <h3 class="aligner">Ancien mot de passe:
 
         <ion-item class="aligner">
-          <ion-input id="input_OldPassword" type="password" value=""></ion-input>
+          <ion-input id="input_OldPassword" type="password" value="" #userNewPwd></ion-input>
           <ion-icon  id="icon_OldPassword" name="eye-outline" button (click)="visibilityPassword($event.target.id)" style="cursor: pointer;"></ion-icon>
         </ion-item>
       </h3>
       <h3 class="aligner">Nouveau mot de passe:
 
         <ion-item class="aligner">
-          <ion-input id="input_NewPassword" type="password" value=""></ion-input>
+          <ion-input id="input_NewPassword" type="password" value="" #userNewPwd></ion-input>
           <ion-icon id="icon_NewPassword" name="eye-outline" button (click)="visibilityPassword($event.target.id)" style="cursor: pointer;" ></ion-icon>
         </ion-item>
       </h3>
     </ion-text>
 
-    <ion-button (click)="modifierInfos()" >Valider</ion-button>
+    <ion-button (click)="modifierInfos(userMail.value,userOldPwd.value,userNewPwd.value)" >Valider</ion-button>
   </div>
 
   <!-- <app-explore-container name="Profil page"></app-explore-container> -->

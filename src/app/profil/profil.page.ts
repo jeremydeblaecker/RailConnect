@@ -51,20 +51,17 @@ export class ProfilPage implements OnInit {
     });
   }
 
-  modifierInfos()
+  modifierInfos(email, opwd ,npwd)
   {
-    const inputMail = (document.getElementById('inputMail') as HTMLInputElement);
-    const inputOldPassword = (document.getElementById('inputOldPassword') as HTMLInputElement);
-    const inputNewPassword = (document.getElementById('inputNewPassword') as HTMLInputElement);
+    const inputMail = (document.getElementById('input_Mail') as HTMLInputElement);
+    const inputOldPassword = (document.getElementById('input_OldPassword') as HTMLInputElement);
 
-    console.log('inputMail.value: ', inputMail.value);
-    console.log('inputOldPassword.value: ', inputOldPassword.value);
-    console.log('inputNewPassword.value: ', inputNewPassword.value);
-
-    this.newPassword = inputNewPassword.value;
+    this.newPassword = npwd;
 
     if(this.actualPassword === inputOldPassword.value ||  this.mail !== inputMail.value){
       this.modif = false;
+    }else{
+      this.authService.editUser(email,opwd,npwd);
     }
   }
 
