@@ -48,12 +48,6 @@ export class AuthService {
       }
   }
 
-  async isLoggedIn(): Promise<boolean> {
-    const user = JSON.parse(await this.storage.get('user'));
-    return (user !== null) ? true : false;
-  }
-  
-
   SetUserData(user: firebase.User) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
