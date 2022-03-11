@@ -91,8 +91,11 @@ export class ProfilPage implements OnInit {
 
   deconnexion(){
     this.authService.SignOut()
-    .then(() => {this.storage.set('checkConnecte',false);
-    this.connecte = false;})
+    .then(() => {
+    this.storage.set('checkConnecte',false);
+    this.storage.remove('user');
+    });
+    this.connecte = false;
     
   }
 

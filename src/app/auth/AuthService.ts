@@ -3,32 +3,32 @@ import { User } from "../user/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat';
+import auth from '@firebase/app-compat';
 import { Storage } from '@ionic/storage';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userData: any; // Save logged in user data
+  userData: any; 
   constructor(
-    public afs: AngularFirestore,   // Inject Firestore service
-    public afAuth: AngularFireAuth, // Inject Firebase auth service  
-    public ngZone: NgZone,
-    private storage : Storage // NgZone service to remove outside scope warning
+    public afs: AngularFirestore,   
+    public afAuth: AngularFireAuth, 
+    public ngZone: NgZone, 
+    private storage : Storage 
   ) {    
-    /* Saving user data in localstorage when 
-    logged in and setting up null when logged out */
+
     this.afAuth.authState.subscribe(async user => {
       if (user) {
         this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
+        this.storage.set('user',JSON.stringify(this.userData));
         JSON.parse(await this.storage.get('user'));
       } else {
-        localStorage.setItem('user', null);
+        this.storage.set('user',null);
         JSON.parse(await this.storage.get('user'));
       }
     })
   }
-  // Sign in with email/password
+
   async SignIn(email: string, password: string) {
     try {
           const result = await this.afAuth.signInWithEmailAndPassword(email, password);
@@ -37,61 +37,23 @@ export class AuthService {
           window.alert(error.message);
       }
   }
-  // Sign up with email/password
+
   async SignUp(email: string, password: string) {
     try {
           const result = await this.afAuth.createUserWithEmailAndPassword(email, password);
-          /* Call the SendVerificaitonMail() function when new user sign
-          up and returns promise */
-          //this.SendVerificationMail();
           this.SetUserData(result.user);
 
       } catch (error) {
           window.alert(error.message);
       }
   }
-  // Send email verfificaiton when new user sign up
-  /*SendVerificationMail() {
-    return this.afAuth.auth.currentUser.sendEmailVerification()
-    .then(() => {
-      this.router.navigate(['verify-email-address']);
-    })
-  }*/
-  // Reset Forggot password
 
-
-  async ForgotPassword(passwordResetEmail: string) {
-    try {
-          await this.afAuth.sendPasswordResetEmail(passwordResetEmail);
-          window.alert('Password reset email sent, check your inbox.');
-      } catch (error) {
-          window.alert(error);
-      }
-  }
-  // Returns true when user is looged in and email is verified
   async isLoggedIn(): Promise<boolean> {
     const user = JSON.parse(await this.storage.get('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
+    return (user !== null) ? true : false;
   }
-  // Sign in with Google
-  /*GoogleAuth() {
-    return this.AuthLogin(new Auth.GoogleAuthProvider());
-  }
-  // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        })
-      this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error)
-    })
-  }
-  /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  
+
   SetUserData(user: firebase.User) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
@@ -106,17 +68,20 @@ export class AuthService {
       merge: true
     })
   }
-  // Sign out 
+
   async SignOut() {
-    await this.afAuth.signOut();
+    await this.afAuth.signOut().then(()=>{
       this.storage.remove('user');
+    })
+      
   }
 
   async editUser(email:string,oldpassword:string,password:string){
     try{
       let user = await this.afAuth.currentUser;
       window.alert("user : "+password);
-      //let _credential = firebase.auth.EmailAuthProvider.credential(user.email,oldpassword)
+      let _credential = auth.auth.EmailAuthProvider.credential(user.email,oldpassword);
+      user.reauthenticateWithCredential(_credential);
       user.updatePassword(password);
     }
     catch (error){

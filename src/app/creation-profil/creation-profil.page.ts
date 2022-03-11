@@ -50,9 +50,15 @@ export class CreationProfilPage implements OnInit {
 
   connexionCompte(email : string, pwd : string){
     this.authService.SignIn(email,pwd)
-    .then(()=>{this.storage.set('checkConnecte', true);
-    this.backButton();});
-  }
+    .then(()=>{
+      this.storage.get('user').then((user)=>{
+        if(user!==null){
+          this.storage.set('checkConnecte', true);
+          this.backButton();
+        }
+      })});  
+    };
+  
 
   visibilityPassword(id : string){
     const eyeChange = (document.getElementById(id) as HTMLIonIconElement);
@@ -71,7 +77,6 @@ export class CreationProfilPage implements OnInit {
   }
 
   backButton(){
-    // console.log('this.oldNav: ', this.oldNav);
     this.navCtrl.navigateRoot(this.oldNav);
   }
 }
