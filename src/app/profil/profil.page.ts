@@ -46,8 +46,8 @@ export class ProfilPage implements OnInit {
   ngOnInit()
   {
     this.user = this.storage.get('user').then((user) =>{
-      console.log("user", user.email);
-      this.mail= user.email
+      let utilisateur = JSON.parse(user);
+      this.mail= utilisateur.email
     });
   }
 
