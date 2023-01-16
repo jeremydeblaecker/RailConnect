@@ -1,5 +1,5 @@
 # Rail Connect
-Projet réalise en Mastère 1 pour le cours de Web Services.  
+Projet réalisé en Mastère 1 pour le cours de Web Services.  
 
 ## Contributeur
   MULLER Jimmy  
